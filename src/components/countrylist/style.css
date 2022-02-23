@@ -1,0 +1,23 @@
+.paginationBttns {
+  width: 80%;
+  height: 40px;
+  list-style: none;
+  display: flex;
+  justify-content: center;
+}
+.paginationBttns a {
+  padding: 10px;
+  margin: 8px;
+  border-radius: 5px;
+  border: 1px solid hsl(208, 40%, 79%);
+  cursor: pointer;
+  color: hsl(209, 59%, 76%);
+  opacity: 0.8;
+}
+.paginationActive a {
+  border: 1px solid #fffd;
+  color: #fff;
+}
+.container .cards {
+  padding: 0 40px;
+}

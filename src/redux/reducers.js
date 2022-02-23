@@ -10,7 +10,7 @@ const initialState = {
   data: "",
 };
 
-export const UsersReducer = (state = initialState, action) => {
+export const countriesReducer = (state = initialState, action) => {
   switch (action.type) {
     case FETCH_COUNTRY_REQUEST:
       return {
@@ -29,5 +29,7 @@ export const UsersReducer = (state = initialState, action) => {
         data: [],
         error: action.payload,
       };
+    default:
+      return state;
   }
 };
