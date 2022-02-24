@@ -20,9 +20,9 @@ const HomePage = () => {
   }, []);
 
   const { data, loading, error } = useSelector((state) => ({
-    data: state.data,
-    loading: state.loading,
-    error: state.error,
+    data: state.countriesReducer.data,
+    loading: state.countriesReducer.loading,
+    error: state.countriesReducer.error,
   }));
 
   const handleChange = (e) => {

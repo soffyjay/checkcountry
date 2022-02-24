@@ -1,23 +1,25 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import "./style.css";
-
+import { useSelector } from "react-redux";
 const CountryCardInfo = () => {
-  const { data, loading, error } = useSelector((state) => ({
-    data: state.data,
-    loading: state.loading,
-    error: state.error,
+  const { data } = useSelector((state) => ({
+    data: state.countryInfoReducer.data,
   }));
-
+  if (!data) {
+    <div>nothing here</div>;
+  }
+  console.log(data);
   return (
     <div className="container">
       <div className="cardinfo_container">
         <div className="cardinfo_image">
-          <img src="" />
-          card image
+          <img src={data.image} alt={data?.name + " " + "flag"} />
         </div>
         <div className="cardinfo_content">
-          <p>Card info for everything u want</p>
+          <h2>{data.name}</h2>
+          <div>
+            <div>hiiii</div>
+          </div>
         </div>
       </div>
     </div>

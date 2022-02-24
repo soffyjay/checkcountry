@@ -1,11 +1,11 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import ReactPaginate from "react-paginate";
 import CountryCard from "../countrycard";
 import { useNavigate } from "react-router-dom";
-import { useLocation } from "react-router-dom";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import "./style.css";
-import CountryCardInfo from "../../pages/countrycardinfo";
+import { fetchCountryInfo } from "../../redux/countryInfoAction";
+import { fetchCountries } from "../../redux";
 const CountryList = ({ data }) => {
   const [pageNumber, setPageNumber] = useState(0);
 
@@ -15,41 +15,42 @@ const CountryList = ({ data }) => {
   const pageVisited = countriesPerPage * pageNumber;
 
   const countries = data?.slice(pageVisited, pageVisited + countriesPerPage);
-  const [info, setInfo] = useState({
-    name: "",
-    population: "",
-    region: "",
-    capital: "",
-  });
-  console.log(info.name);
+
+  const navigate = useNavigate();
   const pageCount = Math.ceil(data?.length / countriesPerPage);
   const changePage = ({ selected }) => {
     setPageNumber(selected);
   };
-  const navigate = useNavigate();
-
+  const dispatch = useDispatch();
   const previewCountry = (e, country) => {
-    setInfo({
-      name: country.name,
-      population: country.population,
-      region: country.region,
-      capital: country.capital,
-    });
-    navigate(`/${info.name}`);
+    dispatch(
+      fetchCountryInfo({
+        name: country.name,
+        population: country.population,
+        region: country.region,
+        capital: country.capital,
+        subRegion: country.subRegion,
+        capital: country.capital,
+        nativeName: country.nativeName,
+        topLevelDomain: country.topLevelDomain,
+        currencies: country.currencies,
+        languages: country.languages,
+        image: country.flags.png,
+      })
+    );
+    navigate(`/${country.name}`);
   };
-  let location = useLocation();
 
   return (
     <div className="container cards">
       {countries &&
-        countries.map((country) => (
+        countries?.map((country) => (
           <CountryCard
             country={country}
-            onClick={() => previewCountry(country.name)}
-            key={country.id}
+            onClick={(e) => previewCountry(e, country)}
+            id={country.id}
           />
         ))}
-
       <ReactPaginate
         previousLabel={"Previous"}
         nextLabel={"Next"}
@@ -64,10 +65,5 @@ const CountryList = ({ data }) => {
     </div>
   );
 };
-<Router>
-  <Routes>
-    <Route path="/:country" element={<CountryCardInfo />}></Route>
-  </Routes>
-</Router>;
 
 export default CountryList;

@@ -1,7 +1,17 @@
 import { createStore, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
-import { countriesReducer } from "./reducers";
+import combineReducers from "./combineReducers";
+import { persistReducer, persistStore } from "redux-persist";
+import storage from "redux-persist/lib/storage";
 
-const store = createStore(countriesReducer, applyMiddleware(thunk));
+const persistConfig = {
+  key: "root",
+  storage,
+  whitelist: ["countryInfoReducer", "countriesReducer"],
+  keyPrefix: "",
+};
 
-export default store;
+const persistedReducer = persistReducer(persistConfig, combineReducers);
+export const store = createStore(persistedReducer, applyMiddleware(thunk));
+
+export const persistor = persistStore(store);

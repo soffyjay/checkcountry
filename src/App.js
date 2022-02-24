@@ -10,7 +10,8 @@ function App() {
     <div className="App">
       <Router>
         <Routes>
-          <Route path="/" element={<HomePage />}></Route>{" "}
+          <Route exact path="/" element={<HomePage />}></Route>{" "}
+          <Route exact path="/:country" element={<CountryCardInfo />} />
         </Routes>
       </Router>
     </div>
